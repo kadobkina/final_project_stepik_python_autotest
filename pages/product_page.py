@@ -12,5 +12,8 @@ class ProductPage(BasePage):
     def correct_product_added_to_basket(self):
         alert = self.browser.find_element(*ProductPageLocators.SUCCESSFUL_ALERT)
         assert alert, "The product was not added to the basket"
-        product_name_in_alert = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME)
-        assert product_name_in_alert.text in alert.text, "A product with a different name has been added to the basket"
+        product_name_in_page = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME)
+        assert product_name_in_page.text == alert.text, "A product with a different name has been added to the basket"
+        product_price_in_page = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE)
+        product_price_in_alert = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE_ALERT)
+        assert product_price_in_page.text == product_price_in_alert.text, "The price of the product does not match the price in the basket"
